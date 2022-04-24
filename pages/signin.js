@@ -14,7 +14,7 @@ export default function Login() {
     async function onSubmit(e) {
         e.preventDefault();
         try {
-            const user = await Auth.signIn(email, password);
+            await Auth.signIn(email, password);
             const params = new URLSearchParams(location.search);
             const nextURL = params.get('url') || '/'
             router.replace(nextURL)
