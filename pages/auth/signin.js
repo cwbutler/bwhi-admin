@@ -1,43 +1,38 @@
 import { useState } from 'react'
 import { Auth } from 'aws-amplify'
-import Layout from '../components/Layout'
-import Image from 'next/image'
-import image from '../public/images/login_image.jpeg'
 import { useRouter } from 'next/router'
+import { useDispatch } from 'react-redux'
+import AuthLayout from '../../components/AuthLayout'
+import { setUser } from '../../state/reducers/auth'
 
-export default function Login() {
+export default function SignIn() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState();
+    const [error, setError] = useState()
     const router = useRouter()
+    const dispatch = useDispatch()
 
     async function onSubmit(e) {
         e.preventDefault();
         try {
-            await Auth.signIn(email, password);
-            const params = new URLSearchParams(location.search);
-            const nextURL = params.get('url') || '/'
-            router.replace(nextURL)
+            const result = await Auth.signIn(email, password)
+            dispatch(setUser(result))
+            if (result.challengeName === 'NEW_PASSWORD_REQUIRED') {
+                return router.push('/auth/changepassword')
+            }
+            router.push(router.query.url || '/')
         } catch (error) {
+            console.log(error)
             setError('Error signing in with credentials provided. Please try again.')
         }
     }
 
   return (
-    <Layout
+    <AuthLayout
       title="BWHI Admin | Login"
       description="Login into BWHI admin"
       className="flex flex-row"
     >
-        <div className="relative flex flex-1">
-        <Image
-            priority
-            alt="BWHI Sign In"
-            src={image}
-            layout="fill"
-        />
-        </div>
-
         <form className="w-full max-w-[520px] pt-[240px] px-[55px] flex flex-col items-center" onSubmit={onSubmit}>
             <h1 className="text-[32px] font-bold text-[#002E5C]">Sign In</h1>
 
@@ -85,6 +80,6 @@ export default function Login() {
                 </div>
             )}
         </form>
-    </Layout>
+    </AuthLayout>
   )
 }
