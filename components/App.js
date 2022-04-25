@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import { Auth, Hub } from 'aws-amplify'
 import { setUser } from '../state/reducers/auth'
+import Landing from './Landing'
 
 export default function App({ Component, ...pageProps }) {
     const [isAppLoading, setIsAppLoading] = useState(true)
@@ -28,5 +29,5 @@ export default function App({ Component, ...pageProps }) {
         })
     }, [])
   
-    return <Component { ...pageProps} />
+    return (isAppLoading) ? <Landing /> : <Component { ...pageProps} />
 }

@@ -6,7 +6,9 @@ export default function Navbar() {
 
     return (
         <div className="flex flex-row w-screen h-[80px] bg-[#F8D38D] py-[24px] px-[40px] items-center">
-            <h1>Welcome, {getName(user?.attributes)}</h1>
+            <h1 className="font-medium">
+                Welcome, {getName(user?.attributes)}
+            </h1>
 
             <div className="flex-auto" />
 

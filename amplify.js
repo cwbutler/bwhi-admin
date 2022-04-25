@@ -1,4 +1,9 @@
 import Amplify from 'aws-amplify'
-import config from './awsconfiguration.json'
 
-Amplify.configure(config)
+Amplify.configure({
+    Auth: {
+        region: process.env.NEXT_PUBLIC_AWS_REGION,
+        userPoolId: process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID,
+        userPoolWebClientId: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID
+    }
+})

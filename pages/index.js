@@ -16,13 +16,10 @@ export default function HomePage() {
     <AppLayout>
       <div className="flex flex-auto flex-col px-[60px]">
         <h1 className="font-medium text-[40px] mt-[60px] mb-[40px]">Select a service</h1>
-        <div className="flex flex-row justify-around">
+        <div className="flex flex-row flex-wrap justify-around">
           {services.map(({name, icon, route}, index) => (
-            <Link href={route}>
-              <div
-                key={`${name}-${index}`}
-                className="flex flex-col items-center rounded-[40px] border-black border-[1px] p-[40px] w-[384px] h-[384px]"
-              >
+            <Link href={route} key={`${name}-${index}`}>
+              <div className="flex flex-col items-center rounded-[40px] border-black border-[1px] p-[40px] w-[384px] h-[384px] mb-[25px]">
                 <Image
                   alt={name}
                   src={icon}
