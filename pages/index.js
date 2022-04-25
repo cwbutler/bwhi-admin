@@ -18,13 +18,13 @@ export default function HomePage() {
         <h1 className="font-medium text-[40px] mt-[60px] mb-[40px]">Select a service</h1>
         <div className="flex flex-row flex-wrap justify-around">
           {services.map(({name, icon, route}, index) => (
-            <Link href={route} key={`${name}-${index}`}>
+            <Link href={route} key={`${name}-${index}`} passHref>
               <div className="flex flex-col items-center rounded-[40px] border-black border-[1px] p-[40px] w-[384px] h-[384px] mb-[25px]">
                 <Image
                   alt={name}
                   src={icon}
                 />
-                <span className="font-medium text-[32px] text-center mt-[60px] w-[200px]">{name}</span>
+                <a className="font-medium text-[32px] text-center mt-[60px] w-[200px]">{name}</a>
               </div>
             </Link>
           ))}

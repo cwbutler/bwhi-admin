@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Auth } from 'aws-amplify'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
+import classnames from 'classnames'
 import AuthLayout from '../../components/AuthLayout'
 import { setUser } from '../../state/reducers/auth'
 
@@ -43,7 +44,9 @@ export default function SignIn() {
                 <input
                     type="email"
                     name="username"
-                    className="mb-[24px] rounded-[8px] invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
+                    className={classnames("mb-[24px] rounded-[8px]", {
+                        "invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500": email?.length > 4 
+                    })}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -57,7 +60,9 @@ export default function SignIn() {
                 <input 
                     type="password" 
                     name="password"
-                    className="mb-[16px] rounded-[8px] border-[#8F92A1] invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500" 
+                    className={classnames("mb-[16px] rounded-[8px] border-[#8F92A1]", {
+                        "invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500": password.length > 2
+                    })}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     minLength={5}
