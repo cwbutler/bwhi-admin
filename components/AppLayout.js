@@ -5,8 +5,8 @@ import SubNavbar from './SubNav'
 export default function AppLayout(props) {
   return (
     <Layout
-      title="BWHI Admin | Login"
-      description="Login into BWHI admin"
+      title={props.title}
+      description={props.description}
       className="flex flex-col"
     >
       <Navbar />

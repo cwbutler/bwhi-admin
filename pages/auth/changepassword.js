@@ -26,8 +26,8 @@ export default function ChangePassword() {
 
   return (
     <AuthLayout
-      title="BWHI Admin | Login"
-      description="Login into BWHI admin"
+      title="Change Password | BWHI Admin"
+      description="Change password for BWHI admin"
       className="flex flex-row"
     >
         <form className="w-full max-w-[520px] pt-[240px] px-[55px] flex flex-col items-center" onSubmit={onSubmit}>

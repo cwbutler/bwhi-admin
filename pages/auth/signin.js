@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import classnames from 'classnames'
 import AuthLayout from '../../components/AuthLayout'
 import { setUser } from '../../state/reducers/auth'
+import Link from 'next/link'
 
 export default function SignIn() {
     const [email, setEmail] = useState('')
@@ -68,7 +69,9 @@ export default function SignIn() {
                     minLength={5}
                     required
                 />
-                <a className="mb-[44px] text-[12px] text-[#002E5C]">Forgot Password?</a>
+                <Link href="/auth/forgotpassword">
+                    <a className="mb-[44px] text-[12px] text-[#002E5C]">Forgot Password?</a>
+                </Link>
             </div>
 
             <button

@@ -1,7 +1,8 @@
 module.exports = {
     theme: {
         fontFamily: {
-            dmSans: ['"DM Sans"', 'sans-serif']
+            dmSans: ['"DM Sans"', 'sans-serif'],
+            inter: ['Inter', 'sans-serif']
         }
     },
     content: [
