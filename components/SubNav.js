@@ -14,15 +14,18 @@ export default function SubNavbar() {
     return (
         <div className="flex flex-row w-screen h-[80px] px-[40px] items-center border-b-[1px] border-[#efefef]">
             <ul className="flex flex-row">
-                {navItems.map((item, index) => (
-                    <Link href={item.route} key={`${item}-${index}`} passHref>
-                        <li className={classnames("py-[28px] mx-[24px]", { "border-b-[3px] border-[#50B8C2]": router.route === item.route })}>
-                            <a className="font-medium">
-                                {item.label}
-                            </a>
-                        </li>
-                    </Link>
-                ))}
+                {navItems.map((item, index) => {
+                    const isActive = router.route === item.route
+                    return (
+                        <Link href={item.route} key={`${item}-${index}`} passHref>
+                            <li className={classnames("py-[28px] mx-[24px] cursor-pointer", { "border-b-[3px] border-ocean": isActive })}>
+                                <a className={classnames("font-medium", { "text-ocean": isActive })}>
+                                    {item.label}
+                                </a>
+                            </li>
+                        </Link>
+                    )
+                })}
             </ul>
         </div>
     )

@@ -3,6 +3,11 @@ module.exports = {
         fontFamily: {
             dmSans: ['"DM Sans"', 'sans-serif'],
             inter: ['Inter', 'sans-serif']
+        },
+        extend: {
+            colors: {
+                ocean: '#50B8C2'
+            }
         }
     },
     content: [

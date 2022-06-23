@@ -6,9 +6,9 @@ const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: {
             // Ignore these action types
-            ignoredActions: ['auth/setUser'],
+            ignoredActions: ['auth/setUser', 'notifications/updateSelectedAlert'],
             // Ignore these paths in the state
-            ignoredPaths: ['auth.user'],
+            ignoredPaths: ['auth.user', 'notifications.list', 'notifications.selectedAlert.image'],
         }
     })
 })

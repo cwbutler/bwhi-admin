@@ -22,12 +22,12 @@ export default function HomePage() {
         <div className="flex flex-row flex-wrap justify-around">
           {services.map(({name, icon, route}, index) => (
             <Link href={route} key={`${name}-${index}`} passHref>
-              <div className="flex flex-col items-center rounded-[40px] border-black border-[1px] p-[40px] mb-[25px]">
+              <div className="flex flex-col items-center rounded-[40px] border-black border-[1px] p-[16px] mb-[25px]">
                 <Image
                   alt={name}
                   src={icon}
                 />
-                <a className="font-inter text-[24px] text-center text-white mt-[60px] w-full px-[16px] py-[24px] bg-[#3A78F2] rounded-[32px] cursor-pointer">
+                <a className="font-inter text-[24px] text-center text-white mt-[60px] w-full p-[16px] bg-[#3A78F2] rounded-[32px] cursor-pointer">
                   {name}
                 </a>
               </div>
