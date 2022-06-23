@@ -67,7 +67,7 @@ export function ImageInput(props) {
                     <div className="w-[375px] h-[250px]">
                         <Image
                             alt="Uploaded"
-                            src={URL.createObjectURL(image)}
+                            src={image}
                             width={375}
                             height={250}
                         />
@@ -89,8 +89,8 @@ export function ImageInput(props) {
                 )}
                 <input
                     onChange={(e) => {
-                        const srcImg = e.target.files[0]
-                        if (srcImg) {
+                        if (e.target.files[0]) {
+                            const srcImg = URL.createObjectURL(e.target.files[0])
                             setImage(srcImg)
                             props.onChange?.(srcImg)
                         }

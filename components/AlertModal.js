@@ -11,6 +11,7 @@ export default function AlertModal(props) {
                     onChange={(e) => props.onChange?.({ title: e.target.value })}
                     name="title"
                     type="text"
+                    required
                 />
             </div>
 
@@ -19,6 +20,7 @@ export default function AlertModal(props) {
                 <TextArea
                     onChange={(e) => props.onChange?.({ description: e.target.value })}
                     name="description"
+                    required
                 />
             </div>
 
@@ -28,6 +30,7 @@ export default function AlertModal(props) {
                     onChange={(e) => props.onChange?.({ time: e.target.value })}
                     name="time"
                     type="datetime-local"
+                    required
                 />
             </div>
 
