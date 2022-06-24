@@ -15,7 +15,7 @@ export function ItemModalContainer(props) {
 
 export function ItemModalHeader(props) {
     return (
-        <div className="flex flex-row justify-between items-center mb-[40px]">
+        <div className="flex flex-row justify-between items-center mb-[20px]">
             <h1 className="font-dmSans font-medium text-[24px]">{props.title}</h1>
 
             <button onClick={props.onClose}>
@@ -49,6 +49,7 @@ export function TextArea(props) {
     return (
         <textarea
             className="border-[1px] border-[#8F92A1] rounded-[8px] p-[16px]"
+            rows={4}
             {...props}
         />
     )
