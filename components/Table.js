@@ -17,10 +17,11 @@ export default function Table({ columns, data }) {
             {...getTableProps()}
         >
             <thead className="border-solid border-b-[1px] border-[#E0E4E8]">
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.map(column => (
+                {headerGroups.map((headerGroup, i) => (
+                    <tr key={i} {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column, i) => (
                             <th
+                                key={i}
                                 className="font-inter font-medium text-[20px] pb-[24px]"
                                 {...column.getHeaderProps()}
                             >{column.render('Header')}</th>
@@ -32,10 +33,10 @@ export default function Table({ columns, data }) {
                 {rows.map((row, i) => {
                     prepareRow(row)
                     return (
-                        <tr className="border-solid border-b-[1px] border-[#E0E4E8]" {...row.getRowProps()}>
-                            {row.cells.map(cell => {
+                        <tr key={i} className="border-solid border-b-[1px] border-[#E0E4E8]" {...row.getRowProps()}>
+                            {row.cells.map((cell, i) => {
                                 return (
-                                    <td className="py-[22px] text-center" {...cell.getCellProps()}>
+                                    <td key={i} className="py-[22px] text-center" {...cell.getCellProps()}>
                                         {cell.render('Cell')}
                                     </td>
                                 )
