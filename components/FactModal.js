@@ -1,39 +1,44 @@
-import { ItemModalContainer, ItemModalHeader, Label, Input, TextArea, ImageInput, PrimaryButton } from './Modal'
+import { Label, Input, TextArea, ImageInput, Modal } from './Modal'
+import useModalEditState from './hooks/useModalEditState'
 
 export default function FactModal(props) {
-    return (props.isOpen) ? (
-        <ItemModalContainer>
-            <ItemModalHeader title="Add New Fast Fact" onClose={props.onClose} />
+    const [item, setItem] = useModalEditState({ isOpen: props.isOpen, item: props.item })
 
+    return (props.isOpen) ? (
+        <Modal
+            item={item}
+            isEditing={props.isEditing}
+            isOpen={props.isOpen}
+            onClose={props.onClose}
+            onPublish={() => props.onPublish?.(item)}
+            onPreview={props.onPreview}
+            publishTitle="Publish Fact"
+            addTitle="Add Fact"
+            editTitle="Edit Fact"
+        >
             <div className="flex flex-col mb-[24px]">
                 <Label title="Title" htmlFor="title" />
                 <Input
-                    onChange={(e) => props.onChange?.({ title: e.target.value })}
+                    onChange={(e) => setItem({ ...item, title: e.target.value })}
                     name="title"
                     type="text"
                     required
-                    value={props.title}
+                    value={item.title}
                 />
             </div>
 
             <div className="flex flex-col mb-[24px]">
                 <Label title="Description" htmlFor="description" />
                 <TextArea
-                    onChange={(e) => props.onChange?.({ description: e.target.value })}
+                    onChange={(e) => setItem({ ...item, description: e.target.value })}
                     name="description"
                     required
-                    value={props.description}
+                    value={item.description}
                 />
             </div>
 
-            <ImageInput image={props.image} onChange={(image) => props.onChange?.({ image })} />
-
-            <PrimaryButton title="Publish Fast Fact " onClick={props.onPublish} />
-
-            <button className="bg-[#8F92A1] p-[12px] rounded-[8px] w-full mb-[30px]" onClick={props.onCancel}>
-                <span className="text-white">Cancel</span>
-            </button>
-        </ItemModalContainer>
+            <ImageInput image={item.image} onChange={(image) => setItem({ ...item, image })} />
+        </Modal>
     ) : null
 }
 

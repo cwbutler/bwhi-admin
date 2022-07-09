@@ -53,7 +53,7 @@ export const deleteSchool = createAsyncThunk(
     }
 )
 
-const schoolSclice = createSlice({
+const schoolSlice = createSlice({
     name: 'schools',
     initialState: schoolAdapter.getInitialState({
         loading: false,
@@ -82,7 +82,7 @@ const schoolSclice = createSlice({
 })
 
 // Extract the action creators object and the reducer
-const { actions, reducer } = schoolSclice
+const { actions, reducer } = schoolSlice
 export const { setSelected } = actions
 // Export the reducer, either as a default or named export
 export default reducer

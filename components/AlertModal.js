@@ -8,6 +8,7 @@ export default function AlertModal(props) {
     return (props.isOpen) ? (
         <Modal
             item={item}
+            isEditing={props.isEditing}
             isOpen={props.isOpen}
             onClose={props.onClose}
             onPublish={() => props.onPublish?.(item)}
