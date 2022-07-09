@@ -1,14 +1,26 @@
-import { ItemModalContainer, ItemModalHeader, Label, Input, TextArea, ImageInput, PrimaryButton } from './Modal'
+import dayjs from 'dayjs'
+import useModalEditState from './hooks/useModalEditState'
+import { Label, Input, TextArea, ImageInput, Modal } from './Modal'
 
 export default function AlertModal(props) {
-    return (props.isOpen) ? (
-        <ItemModalContainer>
-            <ItemModalHeader title="Add New Alert" onClose={props.onClose} />
+    const [item, setItem] = useModalEditState({ isOpen: props.isOpen, item: props.item })
 
+    return (props.isOpen) ? (
+        <Modal
+            item={item}
+            isOpen={props.isOpen}
+            onClose={props.onClose}
+            onPublish={() => props.onPublish?.(item)}
+            publishTitle="Publish Alert"
+            onPreview={props.onPreview}
+            addTitle="Add Alert"
+            editTitle="Edit Alert"
+        >
             <div className="flex flex-col mb-[24px]">
                 <Label title="Alert Title" htmlFor="title" />
                 <Input
-                    onChange={(e) => props.onChange?.({ title: e.target.value })}
+                    value={item?.title || ''}
+                    onChange={(e) => setItem({ ...item, title: e.target.value })}
                     name="title"
                     type="text"
                     required
@@ -18,30 +30,29 @@ export default function AlertModal(props) {
             <div className="flex flex-col mb-[24px]">
                 <Label title="Description" htmlFor="description" />
                 <TextArea
-                    onChange={(e) => props.onChange?.({ description: e.target.value })}
+                    value={item?.description || ''}
+                    onChange={(e) => setItem({ ...item, description: e.target.value })}
                     name="description"
                     required
                 />
             </div>
 
             <div className="flex flex-col mb-[24px]">
-                <Label title="Schedule Alert" htmlFor="time" />
+                <Label title="Schedule Alert" htmlFor="datetime" />
                 <Input
-                    onChange={(e) => props.onChange?.({ time: e.target.value })}
-                    name="time"
+                    value={item.datetime ? dayjs(item.datetime).format('YYYY-MM-DDTHH:mm') : ''}
+                    onChange={(e) => setItem({ ...item, datetime: dayjs(e.target.value).toISOString() })}
+                    name="datetime"
                     type="datetime-local"
                     required
                 />
             </div>
 
-            <ImageInput onChange={(image) => props.onChange?.({ image })} />
-
-            <PrimaryButton title="Publish Alert" onClick={props.onPublish} />
-
-            <button className="bg-[#8F92A1] p-[12px] rounded-[8px] w-full mb-[30px]">
-                <span className="text-white">Preview</span>
-            </button>
-        </ItemModalContainer>
+            <ImageInput 
+                image={item?.image} 
+                onChange={(img) => setItem({ ...item, image: img })}
+            />
+        </Modal>
     ) : null
 }
 

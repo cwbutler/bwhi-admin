@@ -12,6 +12,7 @@ export default function FactModal(props) {
                     name="title"
                     type="text"
                     required
+                    value={props.title}
                 />
             </div>
 
@@ -21,10 +22,11 @@ export default function FactModal(props) {
                     onChange={(e) => props.onChange?.({ description: e.target.value })}
                     name="description"
                     required
+                    value={props.description}
                 />
             </div>
 
-            <ImageInput onChange={(image) => props.onChange?.({ image })} />
+            <ImageInput image={props.image} onChange={(image) => props.onChange?.({ image })} />
 
             <PrimaryButton title="Publish Fast Fact " onClick={props.onPublish} />
 

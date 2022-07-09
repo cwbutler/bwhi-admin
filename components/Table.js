@@ -2,7 +2,7 @@ import { useTable } from 'react-table'
 import Image from 'next/image'
 import trashIcon from '../public/images/trash.png'
 
-export default function Table({ columns, data }) {
+export default function Table({ columns, data, ...props }) {
     const {
         getTableProps,
         getTableBodyProps,
@@ -12,17 +12,14 @@ export default function Table({ columns, data }) {
     } = useTable({ columns, data })
 
     return (
-        <table
-            className="w-full"
-            {...getTableProps()}
-        >
-            <thead className="border-solid border-b-[1px] border-[#E0E4E8]">
+        <table className="w-full" {...getTableProps()}>
+            <thead className="border-solid border-b-[1px] border-[#E0E4E8] whitespace-nowrap">
                 {headerGroups.map((headerGroup, i) => (
                     <tr key={i} {...headerGroup.getHeaderGroupProps()}>
                         {headerGroup.headers.map((column, i) => (
                             <th
                                 key={i}
-                                className="font-inter font-medium text-[20px] pb-[24px]"
+                                className="font-inter font-medium text-[16px] p-[20px]"
                                 {...column.getHeaderProps()}
                             >{column.render('Header')}</th>
                         ))}
@@ -43,11 +40,17 @@ export default function Table({ columns, data }) {
                             })}
                             <td>
                                 <div className="flex items-center justify-center">
-                                    <button className="border-black border-[1px] p-[8px] rounded-[5px] bg-white mx-[4px]">
+                                    <button
+                                        onClick={() => props.onEdit?.(row.original)}
+                                        className="border-black border-[1px] p-[8px] rounded-[5px] bg-white mx-[4px]"
+                                    >
                                         <span className="font-inter text-[16px]">Edit</span>
                                     </button>
-                                    <button className="border-black border-[1px] px-[5px] pt-[5px] rounded-[5px] bg-white mx-[4px]">
-                                        <Image alt="delete" src={trashIcon} />
+                                    <button
+                                        onClick={() => props.onDelete?.(row.original)}
+                                        className="border-black border-[1px] p-[8px] rounded-[5px] bg-white mx-[4px]"
+                                    >
+                                        <span className="font-inter text-[16px]">Delete</span>
                                     </button>
                                 </div>
                             </td>

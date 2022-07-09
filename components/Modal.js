@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { v4 as uuidv4} from 'uuid';
 import closeIcon from '../public/images/close.png'
 import uploadImage from '../public/images/uploadImage.png'
 
@@ -56,7 +57,12 @@ export function TextArea(props) {
 }
 
 export function ImageInput(props) {
-    const [image, setImage] = useState()
+    const [image, setImage] = useState(props.image)
+
+    useEffect(() => {
+        setImage(props.image)
+    }, [props.image])
+
     return (
         <form className="flex flex-col mb-[24px]">
             <Label title="Add Image" htmlFor="imageDiv" />
@@ -123,4 +129,26 @@ export function PrimaryButton(props) {
             <span className="text-white">{props.title}</span>
         </button>
     )
+}
+
+export function Modal({ showPreview=true, ...props }) {
+    const title = props.isEditing? props.editTitle || 'Edit' : props.addTitle || 'Add'
+    return (props.isOpen) ? (
+        <ItemModalContainer>
+            <ItemModalHeader title={title} onClose={props.onClose} />
+
+            {props.children}
+
+            <PrimaryButton
+                title={props.publishTitle || "Publish"}
+                onClick={props.onPublish} 
+            />
+
+            {showPreview && (
+                <button className="bg-[#8F92A1] p-[12px] rounded-[8px] w-full mb-[30px]" onClick={props.onPreview}>
+                    <span className="text-white">Preview</span>
+                </button>
+            )}
+        </ItemModalContainer>
+    ) : null
 }

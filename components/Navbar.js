@@ -21,5 +21,5 @@ export default function Navbar() {
 
 function getName(user={}) {
     return (!user.given_name && !user.family_name) ? 
-        user.email : `${user.given_name} ${user.family_name}`
+        user.email : `${user.given_name || ''} ${user.family_name || ''}`.trim()
 }

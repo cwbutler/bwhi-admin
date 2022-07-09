@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bwhi-staging-194254-authRole",
+      "UnauthRoleArn": "arn:aws:iam::766361691327:role/amplify-bwhi-staging-194254-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::766361691327:role/amplify-bwhi-staging-194254-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-bwhi-staging-194254-deployment",
+      "UnauthRoleName": "amplify-bwhi-staging-194254-unauthRole",
+      "StackName": "amplify-bwhi-staging-194254",
+      "StackId": "arn:aws:cloudformation:us-east-1:766361691327:stack/amplify-bwhi-staging-194254/290c61d0-fef6-11ec-bf0e-0e0c8a5ee8d3",
+      "AmplifyAppId": "d2ey71ztwtzm3n"
+    },
+    "categories": {
+      "auth": {
+        "bwhi": {}
+      }
+    }
+  }
+}
