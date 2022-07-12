@@ -55,4 +55,6 @@ type School @model @auth(rules: [{allow: public}]) {
   updatedAt: AWSDateTime
   createdBy: String
   modifiedBy: String
+  school_address: String
 }
+ 

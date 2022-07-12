@@ -437,6 +437,13 @@ export const schema = {
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
+                },
+                "school_address": {
+                    "name": "school_address",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -467,5 +474,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "532db73551746ff8c260717c59e0e89f"
+    "version": "bc3a6ffe08cb1dbe0d06775c492d4bee"
 };

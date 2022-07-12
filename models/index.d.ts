@@ -85,6 +85,7 @@ export declare class School {
   readonly updatedAt?: string | null;
   readonly createdBy?: string | null;
   readonly modifiedBy?: string | null;
+  readonly school_address?: string | null;
   constructor(init: ModelInit<School>);
   static copyOf(source: School, mutator: (draft: MutableModel<School>) => MutableModel<School> | void): School;
 }

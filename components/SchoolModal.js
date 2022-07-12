@@ -41,6 +41,16 @@ export default function SchoolModal(props) {
             </div>
 
             <div className="flex flex-col mb-[24px]">
+                <Label title="School Address" htmlFor="school_address" />
+                <Input
+                    onChange={(e) => setItem({ ...item, school_address: e.target.value })}
+                    name="school_name"
+                    type="text"
+                    value={item.school_address}
+                />
+            </div>
+
+            <div className="flex flex-col mb-[24px]">
                 <Label title="Health Center Name" htmlFor="health_name" />
                 <Input
                     onChange={(e) => setItem({ ...item, health_name: e.target.value })}
