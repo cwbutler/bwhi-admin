@@ -1,5 +1,6 @@
-import { Auth } from 'aws-amplify'
+import { signOut } from 'firebase/auth';
 import { useSelector } from 'react-redux'
+import { auth } from './firebase';
 
 export default function Navbar() {
     const user = useSelector((state) => state.auth.user)
@@ -12,7 +13,7 @@ export default function Navbar() {
 
             <div className="flex-auto" />
 
-            <button className="bg-black rounded-[20px] p-[8px] w-[117px]" onClick={() => Auth.signOut()}>
+            <button className="bg-black rounded-[20px] p-[8px] w-[117px]" onClick={() => signOut(auth)}>
                 <span className="font-medium text-white text-[16px]">Logout</span>
             </button>
         </div>
