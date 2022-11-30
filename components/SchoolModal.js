@@ -44,7 +44,7 @@ export default function SchoolModal(props) {
                 <Label title="School Address" htmlFor="school_address" />
                 <Input
                     onChange={(e) => setItem({ ...item, school_address: e.target.value })}
-                    name="school_name"
+                    name="school_address"
                     type="text"
                     value={item.school_address}
                 />

@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Auth } from 'aws-amplify'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 import classnames from 'classnames'
 import AuthLayout from '../../components/AuthLayout'
 import { setUser } from '../../state/reducers/auth'
 import Link from 'next/link'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
 export default function SignIn() {
     const [email, setEmail] = useState('')
@@ -17,12 +17,19 @@ export default function SignIn() {
     async function onSubmit(e) {
         e.preventDefault();
         try {
-            const result = await Auth.signIn(email, password)
-            dispatch(setUser(result))
-            if (result.challengeName === 'NEW_PASSWORD_REQUIRED') {
-                return router.push('/auth/changepassword')
-            }
-            router.push(router.query.url || '/')
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    dispatch(setUser(user));
+                    router.push(router.query.url || '/')
+                })
+                .catch((error) => {
+                    console.log("Error loggin in: ", error);
+                    const errorMessage = error.message;
+                    setError(errorMessage);
+                });
         } catch (error) {
             console.log(error)
             setError('Error signing in with credentials provided. Please try again.')

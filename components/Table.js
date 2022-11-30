@@ -1,6 +1,4 @@
 import { useTable } from 'react-table'
-import Image from 'next/image'
-import trashIcon from '../public/images/trash.png'
 
 export default function Table({ columns, data, ...props }) {
     const {

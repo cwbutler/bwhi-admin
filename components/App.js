@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
-import { Auth, Hub } from 'aws-amplify'
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { setUser } from '../state/reducers/auth'
 import Landing from './Landing'
 
@@ -11,22 +11,16 @@ export default function App({ Component, ...pageProps }) {
     const dispatch = useDispatch()
   
     useEffect(() => {
-        Auth.currentAuthenticatedUser({ bypassCache: true })
-            .then((user) => dispatch(setUser(user)))
-            .catch((err) => {
-                console.log(err)
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                dispatch(setUser(user));
+            } else {
+                dispatch(setUser(undefined))
                 router.push('/auth/signin?url=\/')
-            })
-            .finally(() => setIsAppLoading(false))
-      
-        Hub.listen('auth', ({ payload }) => {
-            switch (payload.event) {
-                case 'signOut':
-                    dispatch(setUser(undefined))
-                    router.push('/auth/signin?url=\/')
-                    break;
             }
-        })
+        });
+        setIsAppLoading(false);
     }, [])
   
     return (isAppLoading) ? <Landing /> : <Component { ...pageProps} />

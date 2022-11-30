@@ -1,7 +1,8 @@
-import { DataStore } from '@aws-amplify/datastore';
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit'
+import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
-import { Alert } from '../../models';
+import { db, storage } from '../../components/firebase'
 
 const notificationAdapter = createEntityAdapter({
     selectId: ({ id }) => id,
@@ -14,39 +15,58 @@ export const selectors = notificationAdapter.getSelectors(state => state.notific
 export const fetchNotifications = createAsyncThunk(
     'notifications/fetchNotifications',
     async () => {
-        const response = await DataStore.query(Alert)
-        return response
+        try {
+            const data = [];
+            const query = await getDocs(collection(db, "notifications"));
+            query.forEach(d => data.push(d.data()));
+            return data;
+        } catch (e) {
+            console.log(e);
+        }
     }
 )
 
 export const addNotifiction = createAsyncThunk(
     'notifications/addNotification',
     async (input) => {
-        input.id = uuidv4()
-        const response = await DataStore.save(new Alert(input))
-        return response
+        try {
+            input.id = uuidv4();
+            const factsDBRef = doc(db, "notifications", input.id);
+            if (input.image) {
+                const imageRef = ref(storage, `images/notifications/${input.id}`);
+                await uploadBytes(imageRef, input.image);
+                input.image = await getDownloadURL(imageRef);
+            }
+            await setDoc(factsDBRef, input);
+            return input;
+        } catch (e) {
+            console.log(e);
+        }
     }
 )
 
 export const updateNotification = createAsyncThunk(
     'notifications/updateNotification',
     async (input) => {
-        /* Models in DataStore are immutable. To update a record you must use the copyOf function
-        to apply updates to the item’s fields rather than mutating the instance directly */
-        const original = await DataStore.query(Alert, input.id)
-        const response = await DataStore.save(Alert.copyOf(original, updated => {
-            Object.keys(input).forEach(key => updated[key] = input[key])
-        })) 
-        return response
+        try {
+            const ref = doc(db, "notifications", input.id);
+            await updateDoc(ref, input);
+        } catch (e) {
+            console.log(e);
+        }
+        return input;
     }
 )
 
 export const deleteNotification = createAsyncThunk(
     'notifications/deleteNotification',
     async ({ id }) => {
-        const item = await DataStore.query(Alert, id)
-        DataStore.delete(item)
-        return item
+        try {
+            await deleteDoc(doc(db, "notifications", id));
+        } catch (error) {
+            console.log(error);
+        }
+        return { id };
     }
 )
 
@@ -63,7 +83,7 @@ const alertSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchNotifications.fulfilled, (state, action) => {
-            notificationAdapter.setAll(state, action.payload)
+            if (action.payload) notificationAdapter.setAll(state, action.payload)
         }),
         builder.addCase(addNotifiction.fulfilled, (state, action) => {
             notificationAdapter.addOne(state, action.payload)

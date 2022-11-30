@@ -7,7 +7,7 @@ export default function Navbar() {
     return (
         <div className="flex flex-row w-screen h-[80px] bg-[#EDE0D4] py-[24px] px-[40px] items-center">
             <h1 className="font-medium">
-                Welcome, {getName(user?.attributes)}
+                Welcome, {getName(user)}
             </h1>
 
             <div className="flex-auto" />
@@ -20,6 +20,5 @@ export default function Navbar() {
 }
 
 function getName(user={}) {
-    return (!user.given_name && !user.family_name) ? 
-        user.email : `${user.given_name || ''} ${user.family_name || ''}`.trim()
+    return (!user.displayName) ? user.email : user.displayName;
 }

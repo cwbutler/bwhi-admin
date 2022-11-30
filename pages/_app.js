@@ -1,6 +1,6 @@
 import ProvideReduxStore from '../components/ProvideReduxStore'
 import App from '../components/App'
-import '../amplify'
+import '../components/firebase'
 import '../styles/globals.css'
 
 function BWHIApp({ Component, pageProps }) {

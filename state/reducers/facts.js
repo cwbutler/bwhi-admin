@@ -1,7 +1,8 @@
-import { DataStore } from '@aws-amplify/datastore';
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit'
+import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
-import { Facts } from '../../models';
+import { db, storage } from '../../components/firebase'
 
 const factsAdapter = createEntityAdapter({
     selectId: ({ id }) => id,
@@ -14,39 +15,63 @@ export const selectors = factsAdapter.getSelectors(state => state.facts)
 export const fetchFacts = createAsyncThunk(
     'facts/fetchFacts',
     async () => {
-        const response = await DataStore.query(Facts)
-        return response
+        try {
+            const data = [];
+            const query = await getDocs(collection(db, "fastfacts"));
+            query.forEach(d => data.push(d.data()));
+            return data;
+        } catch (e) {
+            console.log(e);
+        }
     }
 )
 
 export const addFact = createAsyncThunk(
     'facts/addFact',
     async (input) => {
-        input.id = uuidv4()
-        const response = await DataStore.save(new Facts(input))
-        return response
+        try {
+            input.id = uuidv4();
+            const factsDBRef = doc(db, "fastfacts", input.id);
+            if (input.image) {
+                const imageRef = ref(storage, `images/fast-facts/${input.id}`);
+                await uploadBytes(imageRef, input.image);
+                input.image = await getDownloadURL(imageRef);
+            }
+            await setDoc(factsDBRef, {
+                id: input.id,
+                title: input.title || null,
+                description: input.description || null,
+                image: input.image || null,
+            });
+            return input;
+        } catch (e) {
+            console.log(e);
+        }
     }
 )
 
 export const updateFact = createAsyncThunk(
     'facts/updateFact',
     async (input) => {
-        /* Models in DataStore are immutable. To update a record you must use the copyOf function
-        to apply updates to the item’s fields rather than mutating the instance directly */
-        const original = await DataStore.query(Facts, input.id)
-        const response = await DataStore.save(Facts.copyOf(original, updated => {
-            Object.keys(input).forEach(key => updated[key] = input[key])
-        })) 
-        return response
+        try {
+            const ref = doc(db, "fastfacts", input.id);
+            await updateDoc(ref, input);
+        } catch (e) {
+            console.log(e);
+        }
+        return input;
     }
 )
 
 export const deleteFact = createAsyncThunk(
     'facts/deleteFact',
     async ({ id }) => {
-        const item = await DataStore.query(Facts, id)
-        DataStore.delete(item)
-        return item
+        try {
+            await deleteDoc(doc(db, "fastfacts", id));
+        } catch (error) {
+            console.log(error);
+        }
+        return { id };
     }
 )
 

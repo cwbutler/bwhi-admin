@@ -41,7 +41,9 @@ export default function SchoolsPage() {
       Modal={SchoolModal}
       onModalClose={() => dispatch(setSelected(undefined))}
       onUpdateItem={(data) => dispatch(updateSchool(data))}
-      onAddItem={(data) => dispatch(addSchool(data))}
+      onAddItem={(data) => {
+        dispatch(addSchool(data))
+      }}
     />
   )
 }
