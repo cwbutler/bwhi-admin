@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { db, storage } from '../../components/firebase'
 
 const notificationAdapter = createEntityAdapter({
-    selectId: ({ id }) => id,
+    selectId: ({ id }={}) => id,
     // Keep the "all IDs" array sorted based on date    
     sortComparer: (a, b) => new Date(a.datetime) - new Date(b.datetime)
 })

@@ -8,7 +8,8 @@ export default function SubNavbar() {
         { label: 'Home', route: '/' },
         { label: 'Notifications', route: '/notifications' },
         { label: 'Schools', route: '/schools' },
-        { label: 'Fast Facts', route: '/fastfacts' }
+        { label: 'Fast Facts', route: '/fastfacts' },
+        { label: 'Resources', route: '/resources' }
     ]
 
     return (
