@@ -79,8 +79,8 @@ export const addSchool = createAsyncThunk(
                     address_url: input.health_address_url || null,
                     hours: input.health_hours || null,
                     phone: input.health_phone || null,
-                    physical_services: input.health_physical_services.join(''),
-                    sexual_services: input.health_sexual_services.join(''),
+                    physical_services: input.health_physical_services,
+                    sexual_services: input.health_sexual_services,
                     website: input.health_website,
                     type: "health",
                 });
@@ -97,7 +97,7 @@ export const addSchool = createAsyncThunk(
                     main_phone: input.counseling_phone || null,
                     crisis_phone: input.counseling_crisis_phone || null,
                     text_phone: input.counseling_crisis_text || null,
-                    mental_services: input.counseling_services.join(''),
+                    mental_services: input.counseling_services,
                     website: input.counseling_website,
                     type: "counseling",
                 });
@@ -126,8 +126,8 @@ export const updateSchool = createAsyncThunk(
                     address_url: input.health_address_url || null,
                     hours: input.health_hours || null,
                     phone: input.health_phone || null,
-                    physical_services: input.health_physical_services.join(''),
-                    sexual_services: input.health_sexual_services.join(''),
+                    physical_services: input.health_physical_services,
+                    sexual_services: input.health_sexual_services,
                     website: input.health_website,
                 });
             }
@@ -141,7 +141,7 @@ export const updateSchool = createAsyncThunk(
                     main_phone: input.counseling_phone || null,
                     crisis_phone: input.counseling_crisis_phone || null,
                     text_phone: input.counseling_crisis_text || null,
-                    mental_services: input.counseling_services.join(''),
+                    mental_services: input.counseling_services,
                     website: input.counseling_website,
                 });
             }
