@@ -5,11 +5,11 @@ import CommaSeparateLabel from './CommaSeperateLabel'
 export default function SchoolModal(props) {
     const [item, setItem] = useModalEditState({ isOpen: props.isOpen, item: props.item })
     let health_physical_services = item.health_physical_services
-    let health_sexual_services = item.health_sexual_services
+    let health_reproductive_services = item.health_reproductive_services
     let counseling_services = item.counseling_services
 
-    if (Array.isArray(item?.health_sexual_services)) {
-        health_sexual_services = item.health_sexual_services.join(',')
+    if (Array.isArray(item?.health_reproductive_services)) {
+        health_reproductive_services = item.health_reproductive_services.join(',')
     }
     if (Array.isArray(item?.health_physical_services)) {
         health_physical_services = item.health_physical_services.join(',')
@@ -101,11 +101,11 @@ export default function SchoolModal(props) {
             </div>
 
             <div className="flex flex-col mb-[24px]">
-                <Label title="Health Center Sexual Services" htmlFor="health_sexual_services" />
+                <Label title="Health Center Sexual Services" htmlFor="health_reproductive_services" />
                 <TextArea
-                    value={health_sexual_services || ''}
-                    onChange={(e) => setItem({ ...item, health_sexual_services: e.target.value })}
-                    name="health_sexual_services"
+                    value={health_reproductive_services || ''}
+                    onChange={(e) => setItem({ ...item, health_reproductive_services: e.target.value })}
+                    name="health_reproductive_services"
                 />
                 <CommaSeparateLabel />
             </div>

@@ -30,7 +30,7 @@ export const fetchSchools = createAsyncThunk(
                         schoolData.health_hours = serviceData.hours;
                         schoolData.health_phone = serviceData.phone;
                         schoolData.health_physical_services = serviceData.physical_services;
-                        schoolData.health_sexual_services = serviceData.sexual_services;
+                        schoolData.health_reproductive_services = serviceData.reproductive_services;
                         schoolData.health_website = serviceData.website;
                         schools.push(schoolData);
                     }
@@ -80,7 +80,7 @@ export const addSchool = createAsyncThunk(
                     hours: input.health_hours || null,
                     phone: input.health_phone || null,
                     physical_services: input.health_physical_services,
-                    sexual_services: input.health_sexual_services,
+                    reproductive_services: input.health_reproductive_services,
                     website: input.health_website,
                     type: "health",
                 });
@@ -127,7 +127,7 @@ export const updateSchool = createAsyncThunk(
                     hours: input.health_hours || null,
                     phone: input.health_phone || null,
                     physical_services: input.health_physical_services,
-                    sexual_services: input.health_sexual_services,
+                    reproductive_services: input.health_reproductive_services,
                     website: input.health_website,
                 });
             }
@@ -199,8 +199,8 @@ export const { setSelected } = actions
 export default reducer
 
 function cleanSchoolInput(input) {
-    if (!Array.isArray(input.health_sexual_services)) {
-        input.health_sexual_services = input.health_sexual_services?.split(',')
+    if (!Array.isArray(input.health_reproductive_services)) {
+        input.health_reproductive_services = input.health_reproductive_services?.split(',')
     }
     if (!Array.isArray(input.health_physical_services)) {
         input.health_physical_services = input.health_physical_services?.split(',')

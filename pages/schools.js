@@ -14,7 +14,7 @@ export default function SchoolsPage() {
     { Header: 'Health Center Hours', accessor: 'health_hours' },
     { Header: 'Health Center Phone', accessor: 'health_phone' },
     { Header: 'Health Center Website', accessor: 'health_website' },
-    { Header: 'Health Center Sexual Services', accessor: 'health_sexual_services' },
+    { Header: 'Health Center Sexual Services', accessor: 'health_reproductive_services' },
     { Header: 'Health Center Physical Services', accessor: 'health_physical_services' },
     { Header: 'Counseling Center Name', accessor: 'counseling_name' },
     { Header: 'Counseling Center Address', accessor: 'counseling_location' },
