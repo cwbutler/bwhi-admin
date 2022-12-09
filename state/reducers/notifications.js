@@ -1,8 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit'
 import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
-import { db, storage } from '../../components/firebase'
+import { db } from '../../components/firebase'
 
 const notificationAdapter = createEntityAdapter({
     selectId: ({ id }={}) => id,
@@ -32,10 +31,12 @@ export const addNotifiction = createAsyncThunk(
         try {
             input.id = uuidv4();
             const factsDBRef = doc(db, "notifications", input.id);
-            if (input.image) {
-                const imageRef = ref(storage, `images/notifications/${input.id}`);
-                await uploadBytes(imageRef, input.image);
-                input.image = await getDownloadURL(imageRef);
+            if (input.imageToUpload) {
+                input.image = await uploadFileToStorage({
+                    path: `images/notifications/${input.id}`,
+                    file: input.imageToUpload
+                });
+                delete input.imageToUpload
             }
             await setDoc(factsDBRef, input);
             return input;
@@ -50,6 +51,13 @@ export const updateNotification = createAsyncThunk(
     async (input) => {
         try {
             const ref = doc(db, "notifications", input.id);
+            if (input.imageToUpload) {
+                input.image = await uploadFileToStorage({
+                    path: `images/notifications/${input.id}`,
+                    file: input.imageToUpload
+                });
+                delete input.imageToUpload
+            }
             await updateDoc(ref, input);
         } catch (e) {
             console.log(e);

@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
-import { getStorage } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
@@ -20,3 +20,9 @@ export const auth = getAuth(app);
 // export const analytics = getAnalytics(app);
 
 export default { app, auth, db, storage };
+
+export async function uploadFileToStorage({ path, file }) {
+    const storageRef = ref(storage, path);
+    const snapshot = await uploadBytes(storageRef, file, { contentType: file.type });
+    return await getDownloadURL(snapshot.ref);
+}

@@ -1,8 +1,10 @@
 import { Label, Input, TextArea, ImageInput, Modal } from './Modal'
 import useModalEditState from './hooks/useModalEditState'
+import { useState } from 'react'
 
 export default function FactModal(props) {
     const [item, setItem] = useModalEditState({ isOpen: props.isOpen, item: props.item })
+    const [imageToUpload, setImageToUpload] = useState()
 
     return (props.isOpen) ? (
         <Modal
@@ -10,7 +12,7 @@ export default function FactModal(props) {
             isEditing={props.isEditing}
             isOpen={props.isOpen}
             onClose={props.onClose}
-            onPublish={() => props.onPublish?.(item)}
+            onPublish={() => props.onPublish?.({ ...item, imageToUpload })}
             onPreview={props.onPreview}
             publishTitle="Publish Fact"
             addTitle="Add Fact"
@@ -37,7 +39,13 @@ export default function FactModal(props) {
                 />
             </div>
 
-            <ImageInput image={item.image} onChange={(image) => setItem({ ...item, image })} />
+            <ImageInput 
+                image={item.image} 
+                onChange={(image) => { 
+                    setItem({ ...item, image: image.srcImg })
+                    setImageToUpload(image.src)
+                }}
+            />
         </Modal>
     ) : null
 }

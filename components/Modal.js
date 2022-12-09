@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
-import { v4 as uuidv4} from 'uuid';
 import closeIcon from '../public/images/close.png'
 import uploadImage from '../public/images/uploadImage.png'
 
@@ -99,7 +98,7 @@ export function ImageInput(props) {
                         if (e.target.files[0]) {
                             const srcImg = URL.createObjectURL(e.target.files[0])
                             setImage(srcImg)
-                            props.onChange?.(srcImg)
+                            props.onChange?.({ src: e.target.files[0], srcImg })
                         }
                     }}
                     id="image"

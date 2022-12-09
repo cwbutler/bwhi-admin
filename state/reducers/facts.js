@@ -2,7 +2,7 @@ import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/too
 import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
-import { db, storage } from '../../components/firebase'
+import { db, storage, uploadFileToStorage } from '../../components/firebase'
 
 const factsAdapter = createEntityAdapter({
     selectId: ({ id }) => id,
@@ -32,10 +32,12 @@ export const addFact = createAsyncThunk(
         try {
             input.id = uuidv4();
             const factsDBRef = doc(db, "fastfacts", input.id);
-            if (input.image) {
-                const imageRef = ref(storage, `images/fast-facts/${input.id}`);
-                await uploadBytes(imageRef, input.image);
-                input.image = await getDownloadURL(imageRef);
+            if (input.imageToUpload) {
+                input.image = await uploadFileToStorage({
+                    path: `images/fast-facts/${input.id}`,
+                    file: input.imageToUpload
+                });
+                delete input.imageToUpload
             }
             await setDoc(factsDBRef, {
                 id: input.id,
@@ -54,8 +56,15 @@ export const updateFact = createAsyncThunk(
     'facts/updateFact',
     async (input) => {
         try {
-            const ref = doc(db, "fastfacts", input.id);
-            await updateDoc(ref, input);
+            const factsDBRef = doc(db, "fastfacts", input.id);
+            if (input.imageToUpload) {
+                input.image = await uploadFileToStorage({
+                    path: `images/fast-facts/${input.id}`,
+                    file: input.imageToUpload
+                });
+                delete input.imageToUpload
+            }
+            await updateDoc(factsDBRef, input);
         } catch (e) {
             console.log(e);
         }
