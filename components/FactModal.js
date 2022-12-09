@@ -40,9 +40,9 @@ export default function FactModal(props) {
             </div>
 
             <ImageInput 
-                image={item.image} 
+                image={item.imageUrl} 
                 onChange={(image) => { 
-                    setItem({ ...item, image: image.srcImg })
+                    setItem({ ...item, imageUrl: image.srcImg })
                     setImageToUpload(image.src)
                 }}
             />

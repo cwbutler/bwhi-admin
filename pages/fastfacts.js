@@ -10,7 +10,7 @@ export default function FastFactsPage() {
   const facts = useSelector((state) => selectors.selectAll(state))
   const selectedFact = useSelector((state) => state.facts.entities[state.facts.selectedId]) || {}
   const columns = useMemo(() => [
-    { Header: 'Image', accessor: 'image', Cell: ({ value }) => value ? <Image alt="Item Image" src={value} width={120} height={120} /> : null},
+    { Header: 'Image', accessor: 'imageUrl', Cell: ({ value }) => value ? <Image alt="Item Image" src={value} width={120} height={120} /> : null},
     { Header: 'Title', accessor: 'title' },
     { Header: 'Description', accessor: 'description' }
   ], [])

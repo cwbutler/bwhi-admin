@@ -33,7 +33,7 @@ export const addFact = createAsyncThunk(
             input.id = uuidv4();
             const factsDBRef = doc(db, "fastfacts", input.id);
             if (input.imageToUpload) {
-                input.image = await uploadFileToStorage({
+                input.imageUrl = await uploadFileToStorage({
                     path: `images/fast-facts/${input.id}`,
                     file: input.imageToUpload
                 });
@@ -43,7 +43,7 @@ export const addFact = createAsyncThunk(
                 id: input.id,
                 title: input.title || null,
                 description: input.description || null,
-                image: input.image || null,
+                imageUrl: input.imageUrl || null,
             });
             return input;
         } catch (e) {
@@ -58,7 +58,7 @@ export const updateFact = createAsyncThunk(
         try {
             const factsDBRef = doc(db, "fastfacts", input.id);
             if (input.imageToUpload) {
-                input.image = await uploadFileToStorage({
+                input.imageUrl = await uploadFileToStorage({
                     path: `images/fast-facts/${input.id}`,
                     file: input.imageToUpload
                 });
