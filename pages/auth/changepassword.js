@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Auth } from 'aws-amplify'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import AuthLayout from '../../components/AuthLayout'
@@ -15,8 +14,8 @@ export default function ChangePassword() {
     async function onSubmit(e) {
         e.preventDefault();
         try {
-            await Auth.completeNewPassword(user, password)
-            dispatch(setUser(await Auth.currentAuthenticatedUser({ bypassCache: true })))
+            //await Auth.completeNewPassword(user, password)
+            //dispatch(setUser(await Auth.currentAuthenticatedUser({ bypassCache: true })))
             router.replace('/')
         } catch (error) {
             console.log(error)

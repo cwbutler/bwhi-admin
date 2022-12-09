@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Auth } from 'aws-amplify'
 import { useRouter } from 'next/router'
 import AuthLayout from '../../components/AuthLayout'
 
@@ -15,8 +14,8 @@ export default function ChangePassword() {
         if (isEmailSubmitted) {
 
         } else {
-            const result = await Auth.forgotPassword(email)
-            console.log(result)
+            //const result = await Auth.forgotPassword(email)
+            //console.log(result)
             setIsEmailSubmitted(true)
         }
     }
