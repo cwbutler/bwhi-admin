@@ -27,7 +27,7 @@ export default function PageLayout(props) {
         }}
       />
       
-      <div className="bg-white px-[25px] py-[25px] grow mx-[20px] my-[20px] rounded-[40px] overflow-hidden overflow-x-auto">
+      <div className="bg-white px-[25px] py-[25px] grow mx-[20px] my-[20px] rounded-[40px] overflow-auto">
         <Table
           columns={columns}
           data={props.items}
