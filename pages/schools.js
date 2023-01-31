@@ -5,7 +5,7 @@ import { addSchool, deleteSchool, fetchSchools, setSelected, updateSchool, selec
 
 export default function SchoolsPage() {
   const dispatch = useDispatch()
-  const schools = useSelector((state) => selectors.selectAll(state))
+  const schools = useSelector((state) => selectors.selectAll(state)).sort((a, b) => a.school_name - b.school_name)
   const selectedSchool = useSelector(state => selectors.selectById(state, state.schools.selectedId)) || {}
   const columns = [
     { Header: 'School Name', accessor: 'school_name' },
@@ -43,6 +43,7 @@ export default function SchoolsPage() {
       onUpdateItem={(data) => dispatch(updateSchool(data))}
       onAddItem={(data) => {
         dispatch(addSchool(data))
+        dispatch(fetchSchools())
       }}
     />
   )
