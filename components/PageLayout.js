@@ -20,6 +20,7 @@ export default function PageLayout(props) {
       <PageToolbar
         pageTitle={props.pageTitle}
         actionTitle={props.actionTitle}
+        actions={props.actions}
         onActionClick={() => {
             setIsEditing(false)
             setIsAlertModalOpen(true)
@@ -61,6 +62,8 @@ export default function PageLayout(props) {
             }}
         />
       )}
+
+      {props.children}
     </AppLayout>
   )
 }

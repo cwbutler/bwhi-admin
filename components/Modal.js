@@ -6,7 +6,7 @@ import uploadImage from '../public/images/uploadImage.png'
 export function ItemModalContainer(props) {
     return (
         <div className="absolute w-full h-full bg-[rgba(0,0,0,0.2)] flex flex-row justify-end">
-            <div className="w-[550px] h-full bg-white px-[50px] py-[30px] overflow-y-auto">
+            <div className="w-[550px] h-full bg-white px-[50px] py-[30px] overflow-y-auto flex flex-col">
                 {props.children}
             </div>
         </div>
@@ -19,10 +19,7 @@ export function ItemModalHeader(props) {
             <h1 className="font-dmSans font-medium text-[24px]">{props.title}</h1>
 
             <button onClick={props.onClose}>
-                <Image
-                    alt="Close"
-                    src={closeIcon}
-                />
+                <Image alt="Close" src={closeIcon} />
             </button>
         </div>
     )

@@ -24,7 +24,7 @@ export default function Table({ columns, data, ...props }) {
                     </tr>
                 ))}
             </thead>
-            <tbody {...getTableBodyProps()}>
+            <tbody {...getTableBodyProps()} className={props.tbodyClassName}>
                 {rows.map((row, i) => {
                     prepareRow(row)
                     return (
@@ -36,26 +36,32 @@ export default function Table({ columns, data, ...props }) {
                                     </td>
                                 )
                             })}
-                            <td>
-                                <div className="flex items-center justify-center">
-                                    <button
-                                        onClick={() => props.onEdit?.(row.original)}
-                                        className="border-black border-[1px] p-[8px] rounded-[5px] bg-white mx-[4px]"
-                                    >
-                                        <span className="font-inter text-[16px]">Edit</span>
-                                    </button>
-                                    <button
-                                        onClick={() => props.onDelete?.(row.original)}
-                                        className="border-black border-[1px] p-[8px] rounded-[5px] bg-white mx-[4px]"
-                                    >
-                                        <span className="font-inter text-[16px]">Delete</span>
-                                    </button>
-                                </div>
-                            </td>
+                            {props.showActions && (
+                                <td>
+                                    <div className="flex items-center justify-center">
+                                        <button
+                                            onClick={() => props.onEdit?.(row.original)}
+                                            className="border-black border-[1px] p-[8px] rounded-[5px] bg-white mx-[4px]"
+                                        >
+                                            <span className="font-inter text-[16px]">Edit</span>
+                                        </button>
+                                        <button
+                                            onClick={() => props.onDelete?.(row.original)}
+                                            className="border-black border-[1px] p-[8px] rounded-[5px] bg-white mx-[4px]"
+                                        >
+                                            <span className="font-inter text-[16px]">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            )}
                         </tr>
                     )
                 })}
             </tbody>
         </table>
     )
+}
+
+Table.defaultProps = {
+    showActions: true
 }

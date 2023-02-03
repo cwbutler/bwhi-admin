@@ -5,6 +5,8 @@ export default function PageToolbar(props) {
 
             <div className="grow" />
 
+            {props.actions && props.actions}
+
             <button
                 className="bg-ocean px-[16px] py-[13px] rounded-[5px]"
                 onClick={props.onActionClick}

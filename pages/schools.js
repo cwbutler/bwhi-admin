@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { NewSchoolRequesModal } from '../components/NewSchoolRequestModal'
 import Page from '../components/PageLayout'
 import SchoolModal from '../components/SchoolModal'
 import { addSchool, deleteSchool, fetchSchools, setSelected, updateSchool, selectors } from '../state/reducers/schools'
@@ -7,6 +9,7 @@ export default function SchoolsPage() {
   const dispatch = useDispatch()
   const schools = useSelector((state) => selectors.selectAll(state)).sort((a, b) => a.school_name - b.school_name)
   const selectedSchool = useSelector(state => selectors.selectById(state, state.schools.selectedId)) || {}
+  const [isNewSchoolReqModalOpen, setIsNewSchoolReqModalOpen] = useState(false)
   const columns = [
     { Header: 'School Name', accessor: 'school_name' },
     { Header: 'Health Center Name', accessor: 'health_name' },
@@ -45,6 +48,19 @@ export default function SchoolsPage() {
         dispatch(addSchool(data))
         dispatch(fetchSchools())
       }}
-    />
+      actions={[
+        <button
+            key="1"
+            className="bg-[#59BBE8] px-[16px] py-[13px] rounded-[5px] mr-[8px]"
+            onClick={() => setIsNewSchoolReqModalOpen(!isNewSchoolReqModalOpen)}
+        >
+            <span className="text-white text-[16px]">
+              New School Requests
+            </span>
+        </button>
+      ]}
+    >
+      <NewSchoolRequesModal isOpen={isNewSchoolReqModalOpen} onClose={() => setIsNewSchoolReqModalOpen(false)} />
+    </Page>
   )
 }
