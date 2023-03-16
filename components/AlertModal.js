@@ -14,18 +14,18 @@ export default function AlertModal(props) {
             isOpen={props.isOpen}
             onClose={props.onClose}
             onPublish={() => {
-                item.type = item.type ?? "reminder";
+                item.type = item.type || props.type || "reminder";
                 props.onPublish?.({ ...item, imageToUpload })}
             }
             publishTitle="Publish Alert"
             onPreview={props.onPreview}
-            addTitle="Add Alert"
+            addTitle={props.title || "Add Alert"}
             editTitle="Edit Alert"
         >
             <div className="flex flex-col mb-[24px]">
                 <Label title="Alerty Type" htmlFor="type" />
                 <Select
-                    value={item?.type}
+                    value={props.type || item?.type}
                     onChange={(e) => setItem({ ...item, type: e.target.value })}
                     name="type"
                     type="text"

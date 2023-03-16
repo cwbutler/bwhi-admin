@@ -18,7 +18,7 @@ export default function NotificationsPage() {
     { Header: 'Type', accessor: 'type' },
     { Header: 'Title', accessor: 'title' },
     { Header: 'Description', accessor: 'body' },
-    { Header: 'Date Scheduled', accessor: 'scheduledTime' }
+    { Header: 'Date Scheduled', accessor: 'scheduledTime', Cell: ({ value }) => `${value?.toDate?.().toDateString()} at ${value?.toDate?.().toLocaleTimeString()}` }
   ]
 
   return (

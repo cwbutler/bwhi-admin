@@ -11,19 +11,23 @@ exports.scheduledNotifications = functions.runWith({memory: "512MB"})
   .pubsub.schedule("* * * * *").onRun(async () => {
     // Current Timestamp
     const now = admin.firestore.Timestamp.now();
-    // Query all documents ready to perform
-    const query = admin.firestore().collection("/notifications")
+    // Notification tasks to send
+    const tasks = await admin.firestore().collection("/notifications")
       .where("scheduledTime", "<=", now)
       .where("sent", "==", false)
-      .where("cancel", "==", false);
-    // Notification tasks to send
-    const tasks = await query.get();
+      .where("cancel", "==", false)
+      .get();
     // Jobs to execute
-    const jobs = [];
+    const jobs: any = [];
+
+    console.log("Num of notifications to send: ", tasks.docs.length);
 
     // Create jobss from task
     tasks.forEach(async (snapshot) => {
       const {body, title, data, type, imageUrl} = snapshot.data();
+      console.log("Sending notification: ",
+        {body, title, data, type, imageUrl});
+
       // using firebase-admin messaging function to send notification
       // to our subscribed topic i.e. `all` with required `data`/payload
       const job = await admin.messaging().send({
@@ -42,4 +46,6 @@ exports.scheduledNotifications = functions.runWith({memory: "512MB"})
       console.log(`Message sent:: ${job}`);
       jobs.push(job);
     });
+
+    console.log("Jobs: ", tasks, jobs);
   });

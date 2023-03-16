@@ -1,5 +1,5 @@
 import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit'
-import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDocs, setDoc, updateDoc, Timestamp } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 import { db } from '../../components/firebase'
 
@@ -32,6 +32,7 @@ export const addNotifiction = createAsyncThunk(
             input.id = uuidv4();
             input.sent = false;
             input.cancel = false;
+            input.scheduledTime = Timestamp.fromDate(new Date(input.scheduledTime));
             const dbREf = doc(db, "notifications", input.id);
             if (input.imageToUpload) {
                 input.imageUrl = await uploadFileToStorage({
