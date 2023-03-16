@@ -33,7 +33,7 @@ export default function NotificationsPage() {
       columns={columns}
       onEdit={({ id }) => dispatch(setSelected(id))}
       onDelete={(data) => dispatch(deleteNotification(data))}
-      Modal={AlertModal}
+      Modal={(value == 1) ? AffirmationModal : ReminderModal}
       onModalClose={() => dispatch(setSelected(undefined))}
       onUpdateItem={(data) => dispatch(updateNotification(data))}
       onAddItem={(data) => dispatch(addNotifiction(data))}
@@ -48,4 +48,12 @@ function NotificationTitle(props) {
       <option value={1}>Daily Affirmations</option>
     </select>
   );
+}
+
+function AffirmationModal(props) {
+  return <AlertModal {...props} type="affirmation" title="Add Affirmation" />;
+}
+
+function ReminderModal(props) {
+  return <AlertModal {...props} type="reminder" title="Add Reminder" />;
 }
