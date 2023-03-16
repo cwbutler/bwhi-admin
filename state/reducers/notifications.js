@@ -30,15 +30,17 @@ export const addNotifiction = createAsyncThunk(
     async (input) => {
         try {
             input.id = uuidv4();
-            const factsDBRef = doc(db, "notifications", input.id);
+            input.sent = false;
+            input.cancel = false;
+            const dbREf = doc(db, "notifications", input.id);
             if (input.imageToUpload) {
-                input.image = await uploadFileToStorage({
+                input.imageUrl = await uploadFileToStorage({
                     path: `images/notifications/${input.id}`,
                     file: input.imageToUpload
                 });
-                delete input.imageToUpload
             }
-            await setDoc(factsDBRef, input);
+            delete input.imageToUpload
+            await setDoc(dbREf, input);
             return input;
         } catch (e) {
             console.log(e);
@@ -52,12 +54,12 @@ export const updateNotification = createAsyncThunk(
         try {
             const ref = doc(db, "notifications", input.id);
             if (input.imageToUpload) {
-                input.image = await uploadFileToStorage({
+                input.imageUrl = await uploadFileToStorage({
                     path: `images/notifications/${input.id}`,
                     file: input.imageToUpload
                 });
-                delete input.imageToUpload
             }
+            delete input.imageToUpload
             await updateDoc(ref, input);
         } catch (e) {
             console.log(e);

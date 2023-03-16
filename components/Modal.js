@@ -42,6 +42,17 @@ export function Input(props) {
     )
 }
 
+export function Select(props) {
+    return (
+        <select
+            className="border-[1px] border-[#8F92A1] rounded-[8px] p-[16px]"
+            {...props}
+        >
+            {props.children}
+        </select>
+    )
+}
+
 export function TextArea(props) {
     return (
         <textarea
